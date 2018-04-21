@@ -1,7 +1,7 @@
 # Birder-x-Runner
 ## Skelett
 * Poängräkning: Separata för fåglar och tid, egen highscore
-* Spelmekanik: Observera fåglar
+* Spelmekanik: Observera fåglar, visa del av löpsträckan
 * Assets: Fåglar, fågelläten
 
 ## Utveckla
@@ -34,6 +34,7 @@
 * Knapptryck
 * Tracker
 * Trackerfart ökar med knapptryck
+* Visa del man löpt av hela sträckan
 
 ### Svårigheter
 * Inzoomning av synfält vid hög fart

@@ -1,6 +1,8 @@
 # Birder-x-Runner
-## Viktigast att göra
-* Poängräkning: 
+## Att göra
+* Poängräkning 
+* Ljud
+* Grafik
 
 ## Poängräkning
 ### Fåglar

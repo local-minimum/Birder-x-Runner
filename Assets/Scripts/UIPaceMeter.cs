@@ -48,8 +48,14 @@ public class UIPaceMeter : MonoBehaviour
         runStart = Time.timeSinceLevelLoad;
     }
 
+    public bool running = false;
+
     private void Update()
     {
+        if (!running)
+        {
+            return;
+        }
         SetZoneImages();
         SetPacePosition();
     }

@@ -10,12 +10,11 @@ public class Pacer : MonoBehaviour {
 
     [SerializeField]
     KeyCode rightKey;
+    [SerializeField] Start start;
+    [SerializeField] Goal goal;
 
     float cadance = 80f;
     int lastStep = 0;
-
-    [SerializeField]
-    AnimationCurve inc;
 
     float stepLength = 1.2f;
 
@@ -27,11 +26,29 @@ public class Pacer : MonoBehaviour {
     private void OnEnable()
     {
         uiPaceMeter.OnStep += UiPaceMeter_OnStep;
+        start.OnRunStart += HandleRunEvent;
+        goal.OnRunGoal += HandleRunEvent;
     }
 
     private void OnDisable()
     {
         uiPaceMeter.OnStep -= UiPaceMeter_OnStep;
+        start.OnRunStart -= HandleRunEvent;
+        goal.OnRunGoal -= HandleRunEvent;
+    }
+
+    bool running = false;
+    private void HandleRunEvent(RunPhase phase, float time)
+    {
+        if (phase == RunPhase.Start)
+        {
+            running = true;
+            uiPaceMeter.running = true;
+        } else
+        {
+            running = false;
+            uiPaceMeter.running = false;
+        }
     }
 
     private void UiPaceMeter_OnStep(int steps, Leg leg)
@@ -45,6 +62,11 @@ public class Pacer : MonoBehaviour {
     }
 
     void Update () {
+        if (!running)
+        {
+            return;
+        }
+
         if (Input.GetKeyDown(leftKey))
         {
             UpdatePace(uiPaceMeter.Score(Leg.Left));

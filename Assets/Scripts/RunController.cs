@@ -47,6 +47,7 @@ public class RunController : MonoBehaviour {
             StartCoroutine(gps());
         } else if(phase == RunPhase.Goal)
         {
+            if (OnGPS != null) OnGPS(transform.position);
             running = false;
         }
     }

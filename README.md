@@ -5,7 +5,7 @@
 * Assets: Fåglar, fågelläten
 
 ## Utveckla
-* Poängräkning: fåglar/tid, arter/tid, vikta arter
+* Poängräkning: fåglar/tid, arter/tid, vikta arter, highscore för segment
 * Spelmekanik: Flera fåglar per art, inzoomat spelfält, fågelläten som cue
 * Assets: Flera individer per art
 
@@ -26,6 +26,7 @@
 ### Highscore
 * Egen
 * Global
+* För del/segment av sträckan (tex uppförsbacke)
 
 ## Spelmekanik
 

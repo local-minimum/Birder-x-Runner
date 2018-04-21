@@ -8,6 +8,7 @@ public class UIRunClock : MonoBehaviour {
     [SerializeField] Start start;
     [SerializeField] Goal goal;
     [SerializeField] Text clock;
+    [SerializeField] UIRecords uiRecords;
 
     private void OnEnable()
     {
@@ -32,6 +33,21 @@ public class UIRunClock : MonoBehaviour {
         } else if (phase == RunPhase.Goal)
         {
             endTime = time;
+            float runTime = endTime - startTime;
+            if (GeneralManager.HasRunRecording())
+            {
+                
+                uiRecords.ShowRunnerResult(runTime, GeneralManager.GetRunTimeRecord());
+                
+            }
+            else
+            {
+                uiRecords.ShowRunnerResult(runTime);
+            }
+            if (GeneralManager.IsPersonalRunRecord(runTime))
+            {
+                GeneralManager.SetRunRecord(runTime);
+            }
         }
     }
 

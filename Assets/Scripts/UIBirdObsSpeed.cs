@@ -8,6 +8,7 @@ public class UIBirdObsSpeed : MonoBehaviour {
     [SerializeField] Text spedometer;
     [SerializeField] Start start;
     [SerializeField] Goal goal;
+    [SerializeField] UIRecords uiRecords;
 
     BirdWatching[] birds;
 
@@ -37,7 +38,7 @@ public class UIBirdObsSpeed : MonoBehaviour {
     private void HandleObservation(string species)
     {
         observations += 1;
-        if (startTime != 0) spedometer.text = GetFormattedSpeed(time);
+        if (startTime != 0) spedometer.text = GetFormattedSpeed();
     }
 
     float startTime;
@@ -52,6 +53,18 @@ public class UIBirdObsSpeed : MonoBehaviour {
         else if (phase == RunPhase.Goal)
         {
             endTime = time;
+            float score = this.score;
+            if (GeneralManager.HasBirdRunRecord())
+            {
+                uiRecords.ShowBirdRunnerResult(score, GeneralManager.GetBirdRunRecord());
+            } else
+            {
+                uiRecords.ShowBirdRunnerResult(score);
+            }
+            if (GeneralManager.IsPersonalBirdRunRecord(score))
+            {
+                GeneralManager.SetBirdRunRecord(score);
+            }
         }
     }
 
@@ -61,13 +74,22 @@ public class UIBirdObsSpeed : MonoBehaviour {
         {
             return;
         }
-        spedometer.text = GetFormattedSpeed(time);
+        spedometer.text = GetFormattedSpeed();
     }
 
 
-    string GetFormattedSpeed(float time)
+    string GetFormattedSpeed()
     {
-        return (observations * 60 / time ).ToString("00.0");
+        return score.ToString("00.0");
+    }
+
+    public float score
+    {
+        get
+        {
+            float t = time;            
+            return t == 0 ? 0 : observations * 60 / t;
+        }
     }
 
     float time

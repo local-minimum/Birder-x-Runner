@@ -37,9 +37,9 @@ public class RecordRun : MonoBehaviour {
         {
             currentGoalTime = time;
             float currentTime = currentGoalTime - currentStartTime;
-            if (GeneralManager.IsPersonalRecord(currentTime))
+            if (GeneralManager.IsPersonalRunRecord(currentTime))
             {
-                GeneralManager.SetRecordRecording(currentRun, currentTime);
+                GeneralManager.SetRunRecording(currentRun);
             }
             currentRun.Clear();
         }
@@ -56,7 +56,7 @@ public class RecordRun : MonoBehaviour {
 
     private void Update()
     {
-        if (currentStartTime > 0 && currentGoalTime == 0 && GeneralManager.HasRecording())
+        if (currentStartTime > 0 && currentGoalTime == 0 && GeneralManager.HasRunRecording())
         {
             SetShadowPosition();
         }

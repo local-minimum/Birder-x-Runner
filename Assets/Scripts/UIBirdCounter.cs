@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class UIBirdCounter : MonoBehaviour {
 
-    [SerializeField]
-    Text counter;
+    [SerializeField] Text counter;
+    [SerializeField] Goal goal;
+    [SerializeField] UIRecords uiRecords;
 
     BirdWatching[] birds;
 
@@ -19,6 +20,7 @@ public class UIBirdCounter : MonoBehaviour {
         {
             birds[i].OnBirdWatched += HandleObservation;
         }
+        goal.OnRunGoal += HandleRunEvent;
     }
 
     private void OnDisable()
@@ -27,10 +29,36 @@ public class UIBirdCounter : MonoBehaviour {
         {
             birds[i].OnBirdWatched -= HandleObservation;
         }
+        goal.OnRunGoal -= HandleRunEvent;
+    }
+
+    bool observing = true;
+    private void HandleRunEvent(RunPhase phase, float time)
+    {
+        if (phase == RunPhase.Goal)
+        {
+            observing = false;
+            if (GeneralManager.HasBirdingRecording())
+            {
+                uiRecords.ShowBirderResult(score, GeneralManager.GetBirdingRecord());
+            } else
+            {
+                uiRecords.ShowBirderResult(score);
+            }
+            if (GeneralManager.IsPersonalBirdingRecord(score))
+            {
+                GeneralManager.SetBirdingRecord(score);
+            }
+        }
     }
 
     private void HandleObservation(string species)
     {
+        if (!observing)
+        {
+            return;
+        }
+
         if (!observations.ContainsKey(species))
         {
             observations[species] = 1;
@@ -38,6 +66,14 @@ public class UIBirdCounter : MonoBehaviour {
         {
             observations[species] += 1;
         }
-        counter.text = observations.Keys.Count.ToString("000");
+        counter.text = score.ToString("000");
+    }
+
+    public int score
+    {
+        get
+        {
+            return observations.Keys.Count;
+        }
     }
 }

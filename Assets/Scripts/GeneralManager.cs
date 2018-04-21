@@ -22,26 +22,75 @@ public class GeneralManager : MonoBehaviour {
         }
     }
 
-    public static bool IsPersonalRecord(float time)
+    public static bool IsPersonalRunRecord(float time)
     {
-        return instance.bestTime <= 0 || time < instance.bestTime;
+        return instance.bestRunTime <= 0 || time < instance.bestRunTime;
     }
 
-    public static void SetRecordRecording(List<KeyValuePair<float, Vector2>> run, float time)
+    public static bool IsPersonalBirdingRecord(int score)
     {
-        instance.bestTime = time;
-        instance.bestRun.Clear();
-        instance.bestRun.AddRange(run);
+        return score > 0 && (instance.bestBirdScore <= 0 || score > instance.bestBirdScore);
     }
 
-    public static bool HasRecording()
+    public static bool IsPersonalBirdRunRecord(float value)
     {
-        return instance.bestTime > 0;
+        return value > 0 && (instance.bestBirdRun < 0 || value > instance.bestBirdRun);
+    }
+
+    public static void SetRunRecording(List<KeyValuePair<float, Vector2>> run)
+    {
+        instance.runRecording.Clear();
+        instance.runRecording.AddRange(run);
+    }
+
+    public static void SetRunRecord(float record)
+    {
+        instance.bestRunTime = record;
+    }
+
+    public static void SetBirdingRecord(int record)
+    {
+        instance.bestBirdScore = record;
+    }
+
+    public static void SetBirdRunRecord(float record)
+    {
+        instance.bestBirdRun = record;
+    }
+
+    public static bool HasRunRecording()
+    {
+        return instance.bestRunTime > 0;
+    }
+
+    public static bool HasBirdingRecording()
+    {
+        return instance.bestBirdScore > 0;
+    }
+
+    public static bool HasBirdRunRecord()
+    {
+        return instance.bestBirdRun > 0;
+    }
+
+    public static float GetRunTimeRecord()
+    {
+        return instance.bestRunTime;
+    }
+
+    public static float GetBirdRunRecord()
+    {
+        return instance.bestBirdRun;
+    }
+
+    public static int GetBirdingRecord()
+    {
+        return instance.bestBirdScore;
     }
 
     public static Vector2 GetBestRunPosition(float currentTime)
     {
-        List<KeyValuePair<float, Vector2>> bestRun = instance.bestRun;
+        List<KeyValuePair<float, Vector2>> bestRun = instance.runRecording;
         for (int i = 0, l = bestRun.Count - 2; i < l; i++)
         {
             KeyValuePair<float, Vector2> checkpoint1 = bestRun[i];
@@ -74,9 +123,14 @@ public class GeneralManager : MonoBehaviour {
 	}
 
     [SerializeField]
-    List<KeyValuePair<float, Vector2>> bestRun = new List<KeyValuePair<float, Vector2>>();
+    List<KeyValuePair<float, Vector2>> runRecording = new List<KeyValuePair<float, Vector2>>();
 
     [SerializeField]
-    float bestTime;
+    float bestRunTime;
 
+    [SerializeField]
+    int bestBirdScore;
+
+    [SerializeField]
+    float bestBirdRun;
 }

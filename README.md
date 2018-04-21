@@ -7,7 +7,7 @@
 ## Utveckla
 * Poängräkning: fåglar/tid, arter/tid, vikta arter
 * Spelmekanik: Flera fåglar per art, inzoomat spelfält, fågelläten som cue
-* Assets
+* Assets: Flera individer per art
 
 ## Poängräkning
 ### Fåglar
@@ -48,6 +48,7 @@
 * Observation visas som progress bar runt fågeln, med låg konstant fart
 * Progressfart ökar när muspekaren är över fågeln
 * Full progress bar är observerad fågel
+* Fortsätta observationen när individen kommer tillbaka
 
 ### Övrigt
 * Tidigare spelomgång som skugga i nuvarande spel

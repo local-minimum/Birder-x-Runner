@@ -52,6 +52,12 @@
 * Full progress bar är observerad fågel
 * Fortsätta observationen när individen kommer tillbaka
 
+### Intro
+* Introbild: nåt med springa/löpning och nåt helt annat med fågelskådning
+* Backstory: två separata utan koppling.
+  * Fågel + tid: Vi är i det sjätte massutdöende. Vi behöver kartlägga vilka fåglar som finns innan de försvinner, så snabbt som möjligt!
+  * Löpning + sträcka: Anna brukar springa en kilometer på morgonen varje dag innan hon dricker sitt kaffe. Träningsvärken efter på jobbet känns bra - ett kvitto på att hon åstadkommit något! 
+
 ### Övrigt
 * Tidigare spelomgång som skugga i nuvarande spel
 

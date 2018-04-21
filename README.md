@@ -35,6 +35,8 @@
 * Tracker
 * Trackerfart ökar med knapptryck
 * Visa del man löpt av hela sträckan
+* Pulsmätare som minskar grönt fält i trackern med högre puls
+* Pulsen minskar för varje observerad fågel
 
 ### Svårigheter
 * Inzoomning av synfält vid hög fart

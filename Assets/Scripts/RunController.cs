@@ -2,9 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public delegate void GPSEvent(Vector2 pos);
+
 public class RunController : MonoBehaviour {
 
+    public event GPSEvent OnGPS;
+
     [SerializeField] Pacer pacer;
+
+    [SerializeField, Range(0, 1)] float gpsFrequency = 0.1f;
 
     float speed;
 
@@ -38,6 +44,7 @@ public class RunController : MonoBehaviour {
         if (phase == RunPhase.Start)
         {
             running = true;
+            StartCoroutine(gps());
         } else if(phase == RunPhase.Goal)
         {
             running = false;
@@ -45,6 +52,15 @@ public class RunController : MonoBehaviour {
     }
 
     bool running = false;
+
+    IEnumerator<WaitForSeconds> gps()
+    {
+        while(running)
+        {
+            if (OnGPS != null) OnGPS(transform.position);
+            yield return new WaitForSeconds(gpsFrequency);
+        }
+    }
 
     void Update () {
         if (running)

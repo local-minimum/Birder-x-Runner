@@ -6,8 +6,8 @@
 
 ## Utveckla
 * Poängräkning: fåglar/tid, arter/tid, vikta arter, highscore för segment
-* Spelmekanik: Flera fåglar per art, inzoomat spelfält, fågelläten som cue
-* Assets: Flera individer per art
+* Spelmekanik: Viktad fågelpoäng, inzoomat spelfält (bug), pulsmätare, lutnings vektor, fågelläten som cue, stegljud
+* Assets: fler arter, baktrunder, animerad spelare, animationer, ljud, musik,
 
 ## Poängräkning
 ### Fåglar

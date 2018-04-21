@@ -406,6 +406,7 @@ GameObject:
   - component: {fileID: 306648062}
   - component: {fileID: 306648061}
   - component: {fileID: 306648060}
+  - component: {fileID: 306648064}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -476,6 +477,37 @@ Transform:
   m_Father: {fileID: 127746078}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &306648064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 306648059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68448d5a6e5b77947be44921cfed9fb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedToViewSize:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0.5
+      value: 7
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 5
+    - serializedVersion: 2
+      time: 2.2
+      value: 3
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  pacer: {fileID: 991524699}
+  attack: 0.5
 --- !u!1 &423958831
 GameObject:
   m_ObjectHideFlags: 0
@@ -1127,7 +1159,7 @@ Transform:
   m_Children:
   - {fileID: 1714538089}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &775512958
 BoxCollider2D:
@@ -3184,7 +3216,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1943862043
 GameObject:
@@ -3491,7 +3523,7 @@ Transform:
   m_LocalScale: {x: 0.3, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2057466727
 MonoBehaviour:

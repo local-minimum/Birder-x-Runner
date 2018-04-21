@@ -2,7 +2,7 @@
 ## Skelett
 * Poängräkning: Separata för fåglar och tid, egen highscore
 * Spelmekanik: Observera fåglar, visa del av löpsträckan
-* Assets: Fåglar, fågelläten
+* Assets: Fåglar, fågelläten, bakgrunder
 
 ## Utveckla
 * Poängräkning: fåglar/tid, arter/tid, vikta arter, highscore för segment

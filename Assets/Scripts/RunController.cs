@@ -16,13 +16,51 @@ public class RunController : MonoBehaviour {
         Debug.Log(deltaY);
     }
 
+    [SerializeField]
+    Start start;
+    [SerializeField]
+    Goal goal;
+
+    private void OnEnable()
+    {
+        start.OnRunStart += HandleRunEvent;
+        goal.OnRunGoal += HandleRunEvent;
+    }
+
+    private void OnDisable()
+    {
+        start.OnRunStart -= HandleRunEvent;
+        goal.OnRunGoal -= HandleRunEvent;
+    }
+
+    private void HandleRunEvent(RunPhase phase, float time)
+    {
+        if (phase == RunPhase.Start)
+        {
+            running = true;
+        } else if(phase == RunPhase.Goal)
+        {
+            running = false;
+        }
+    }
+
+    bool running = false;
+
     void Update () {
+        if (running)
+        {
+            SetNewPosition();
+        }
+	}
+
+    void SetNewPosition()
+    {
         speed = pacer.Speed;
         Vector3 pos = transform.position;
         pos.x += speed * Time.deltaTime;
         pos.y = GetGroundElevation(pos) + deltaY;
         transform.position = pos;
-	}
+    }
 
     [SerializeField] float rayU = 0.1f;
 

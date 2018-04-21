@@ -22,6 +22,8 @@
 * Egen
 * Global
 
+## Spelmekanik
+
 ### Styra löparen
 * Knapptryck
 * Tracker
@@ -40,6 +42,8 @@
 * Observation visas som progress bar under fågeln, med låg konstant fart
 * Progressfart ökar när muspekaren är över fågeln
 * Full progress bar är observerad fågel
+
+## Assets
 
 ### Grafik
 * Fåglar

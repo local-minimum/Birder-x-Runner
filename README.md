@@ -31,6 +31,7 @@
 
 ### Svårigheter
 * Inzoomning av synfält vid hög fart
+* Koordination: styra mycket samtidigt
 * Flera fåglar per art. Observera redan observerad fågel ger ej extra poäng.
 * Uppmärksamhet splittras mellan observation och löpning
 

@@ -1,7 +1,12 @@
 # Birder-x-Runner
-## Att göra
-* Poängräkning 
-* Spelmekanik
+## Skelett
+* Poängräkning: Separata för fåglar och tid, egen highscore
+* Spelmekanik: Observera fåglar
+* Assets: Fåglar, fågelläten
+
+## Utveckla
+* Poängräkning: fåglar/tid, arter/tid, vikta arter
+* Spelmekanik: Flera fåglar per art, inzoomat spelfält, fågelläten som cue
 * Assets
 
 ## Poängräkning
@@ -40,7 +45,7 @@
 
 ### Fågelobservation
 * Musklick på fågelns hitbox startar observation
-* Observation visas som progress bar under fågeln, med låg konstant fart
+* Observation visas som progress bar runt fågeln, med låg konstant fart
 * Progressfart ökar när muspekaren är över fågeln
 * Full progress bar är observerad fågel
 

@@ -1,8 +1,8 @@
 # Birder-x-Runner
 ## Att göra
 * Poängräkning 
-* Ljud
-* Grafik
+* Spelmekanik
+* Assets
 
 ## Poängräkning
 ### Fåglar
@@ -42,6 +42,9 @@
 * Observation visas som progress bar under fågeln, med låg konstant fart
 * Progressfart ökar när muspekaren är över fågeln
 * Full progress bar är observerad fågel
+
+### Övrigt
+* Tidigare spelomgång som skugga i nuvarande spel
 
 ## Assets
 

@@ -52,11 +52,14 @@ public class Pacer : MonoBehaviour {
         }
     }
 
+    [SerializeField] float missedStepFactor;
+
     private void UiPaceMeter_OnStep(int steps, Leg leg)
     {
         if (steps > lastStep + 1)
         {
-            cadance = Mathf.Clamp(Mathf.Min(cadance - 10f, cadance * 0.7f), 40, 250);
+            cadance -= cadanceDecrease.Evaluate(cadance) * missedStepFactor;
+            cadance = Mathf.Max(cadance, 0);
             Debug.Log(string.Format("CADANCE MISSED STEP {0}", cadance));
             uiPaceMeter.pace = cadance;
         }
@@ -79,21 +82,25 @@ public class Pacer : MonoBehaviour {
         }
     }
 
+    [SerializeField] AnimationCurve cadanceIncrease;
+    [SerializeField] AnimationCurve cadanceDecrease;
+    [SerializeField] float fumbleFactor = 10;
+
     void UpdatePace(PaceEffect adjustment)
     {
         switch(adjustment)
         {
             case PaceEffect.Increase:
-                cadance += 5f;
+                cadance += cadanceIncrease.Evaluate(cadance);
                 break;
             case PaceEffect.Decrease:
-                cadance -= 5f;
+                cadance -= cadanceDecrease.Evaluate(cadance);
                 break;
             case PaceEffect.Fumble:
-                cadance *= 0.4f;
+                cadance -= cadanceDecrease.Evaluate(cadance) * fumbleFactor;
                 break;
         }
-        cadance = Mathf.Clamp(cadance, 40, 200);
+        cadance = Mathf.Max(cadance, 0);
         Debug.Log(string.Format("CADANCE {0} {1}", adjustment, cadance));
         uiPaceMeter.pace = cadance;
     }

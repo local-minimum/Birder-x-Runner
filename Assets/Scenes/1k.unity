@@ -2797,6 +2797,62 @@ MonoBehaviour:
   start: {fileID: 1888330958}
   goal: {fileID: 2057466727}
   stepLength: 1.2
+  missedStepFactor: 2
+  cadanceIncrease:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 40
+      value: 19.966187
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 85.90949
+      value: 18.110098
+      inSlope: -0.1335144
+      outSlope: -0.1335144
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 135.40509
+      value: 4.0069184
+      inSlope: -0.18596649
+      outSlope: -0.18596649
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 200
+      value: -0.033813477
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  cadanceDecrease:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: -0.52724075
+      value: 1.0321655
+      inSlope: 0.07760276
+      outSlope: 0.07760276
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 23.90469
+      value: 5.430678
+      inSlope: 0.11205673
+      outSlope: 0.11205673
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 200
+      value: 20
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  fumbleFactor: 5
 --- !u!1 &1008675381
 GameObject:
   m_ObjectHideFlags: 0
@@ -4163,6 +4219,7 @@ MonoBehaviour:
   increasingAttack: 0.1
   climbEffortFactor: 20
   descentEffortFactor: 5
+  updateFreq: 1.4
 --- !u!1 &1303582666
 GameObject:
   m_ObjectHideFlags: 0

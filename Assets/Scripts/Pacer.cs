@@ -16,6 +16,7 @@ public class Pacer : MonoBehaviour {
     float cadance = 80f;
     int lastStep = 0;
 
+    [SerializeField]
     float stepLength = 1.2f;
 
     private void Start()
@@ -92,7 +93,7 @@ public class Pacer : MonoBehaviour {
                 cadance *= 0.4f;
                 break;
         }
-        cadance = Mathf.Clamp(cadance, 40, 250);
+        cadance = Mathf.Clamp(cadance, 40, 200);
         Debug.Log(string.Format("CADANCE {0} {1}", adjustment, cadance));
         uiPaceMeter.pace = cadance;
     }

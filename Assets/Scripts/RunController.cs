@@ -80,6 +80,15 @@ public class RunController : MonoBehaviour {
         }
 	}
 
+    float _slope = 0;
+    public float Slope
+    {
+        get
+        {
+            return _slope;
+        }
+    }
+
     void SetNewPosition()
     {
         speed = pacer.Speed;
@@ -89,6 +98,7 @@ public class RunController : MonoBehaviour {
         elevationSlope = GetGround(pos);
         pos.y = elevationSlope.elevation + deltaY;
         transform.position = pos;
+        _slope = elevationSlope.slope;
     }
 
     [SerializeField] float rayU = 0.1f;

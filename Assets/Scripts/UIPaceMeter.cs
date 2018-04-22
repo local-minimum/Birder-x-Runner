@@ -48,6 +48,7 @@ public class UIPaceMeter : MonoBehaviour
         runStart = Time.timeSinceLevelLoad;
     }
 
+    [HideInInspector]
     public bool running = false;
 
     private void Update()

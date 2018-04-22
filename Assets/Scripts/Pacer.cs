@@ -21,7 +21,7 @@ public class Pacer : MonoBehaviour {
 
     private void Start()
     {
-        uiPaceMeter.pace = cadance;
+        uiPaceMeter.cadance = cadance;
     }
 
     private void OnEnable()
@@ -61,7 +61,7 @@ public class Pacer : MonoBehaviour {
             cadance -= cadanceDecrease.Evaluate(cadance) * missedStepFactor;
             cadance = Mathf.Max(cadance, 0);
             Debug.Log(string.Format("CADANCE MISSED STEP {0}", cadance));
-            uiPaceMeter.pace = cadance;
+            uiPaceMeter.cadance = cadance;
         }
     }
 
@@ -102,7 +102,7 @@ public class Pacer : MonoBehaviour {
         }
         cadance = Mathf.Max(cadance, 0);
         Debug.Log(string.Format("CADANCE {0} {1}", adjustment, cadance));
-        uiPaceMeter.pace = cadance;
+        uiPaceMeter.cadance = cadance;
     }
 
     public float Speed

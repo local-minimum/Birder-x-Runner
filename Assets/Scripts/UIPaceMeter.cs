@@ -20,20 +20,13 @@ public class UIPaceMeter : MonoBehaviour
     [SerializeField] RectTransform paceMarker;
 
     [HideInInspector]
-    public float pace = 70;
+    public float cadance = 70;
 
-    float paceMarkerYmin;
-    float paceMarkerYmax;
+    float stepMarkerYmin;
+    float stepMarkerYmax;
 
-    [SerializeField, Range(0, 0.5f)]
-    float loweringThreshold = 0.4f;
-
-    [SerializeField, Range(0, 0.5f)]
-    float sameThreshold = 0.3f;
-
-    [SerializeField, Range(0, 0.5f)]
-    float increasingThreshold = 0.15f;
-
+    [SerializeField] RunController rc;
+    [SerializeField] UIRunPulse pulseMeter;
 
     float position = 0.5f;
     float direction = 1f;
@@ -43,6 +36,10 @@ public class UIPaceMeter : MonoBehaviour
 
     private void Start()
     {
+        float difficulty = cadanceDifficulty;
+        loweringThreshold = loweringTarget.Evaluate(difficulty);
+        sameThreshold = sameTarget.Evaluate(difficulty);
+        increasingThreshold = increasingTarget.Evaluate(difficulty);
         SetZoneImages();
         GetMarkerYSize();
         runStart = Time.timeSinceLevelLoad;
@@ -57,8 +54,26 @@ public class UIPaceMeter : MonoBehaviour
         {
             return;
         }
+        SetZoneThresholds();
         SetZoneImages();
-        SetPacePosition();
+        SetCadancePosition();
+    }
+
+    [SerializeField] AnimationCurve loweringTarget;
+    [SerializeField] AnimationCurve sameTarget;
+    [SerializeField] AnimationCurve increasingTarget;
+    float loweringThreshold;
+    float sameThreshold;
+    float increasingThreshold;
+    [SerializeField, Range(0, 0.5f)]
+    float attack = 0.1f;
+
+    void SetZoneThresholds()
+    {
+        float difficulty = cadanceDifficulty;
+        loweringThreshold = Mathf.Lerp(loweringThreshold, loweringTarget.Evaluate(difficulty), attack * Time.deltaTime);
+        sameThreshold = Mathf.Lerp(sameThreshold, sameTarget.Evaluate(difficulty), attack * Time.deltaTime);
+        increasingThreshold = Mathf.Lerp(increasingThreshold, increasingTarget.Evaluate(difficulty), attack * Time.deltaTime);
     }
 
     void SetZoneImages()
@@ -71,17 +86,32 @@ public class UIPaceMeter : MonoBehaviour
         }
     }
 
-    float paceProgress
+    [SerializeField] AnimationCurve bpmToDifficulty;
+
+    float cadanceDifficulty
     {
         get
         {
-            return pace * Time.deltaTime / 60;
+            float slope = rc.Slope;
+            if (slope > Mathf.PI)
+            {
+                slope = 2 * Mathf.PI - slope;
+            }
+            return 1 + slope + bpmToDifficulty.Evaluate(pulseMeter.Pulse);
         }
     }
 
-    void SetPacePosition()
+    float cadanceProgress
     {
-        float progress = paceProgress;
+        get
+        {
+            return cadance * Time.deltaTime / 60;
+        }
+    }
+
+    void SetCadancePosition()
+    {
+        float progress = cadanceProgress;
         position += direction * progress;
         if (direction > 0 && position > 1f)
         {
@@ -97,18 +127,19 @@ public class UIPaceMeter : MonoBehaviour
             steps++;
             if (OnStep != null) OnStep(steps, Leg.Left);
         }
-        paceMarker.anchorMin = new Vector2(position, paceMarkerYmin);
-        paceMarker.anchorMax = new Vector2(position, paceMarkerYmax);
+        paceMarker.anchorMin = new Vector2(position, stepMarkerYmin);
+        paceMarker.anchorMax = new Vector2(position, stepMarkerYmax);
     }
 
     void GetMarkerYSize()
     {
-        paceMarkerYmin = paceMarker.anchorMin.y;
-        paceMarkerYmax = paceMarker.anchorMax.y;
+        stepMarkerYmin = paceMarker.anchorMin.y;
+        stepMarkerYmax = paceMarker.anchorMax.y;
     }
 
     public PaceEffect Score(Leg foot)
     {
+        float difficulty = cadanceDifficulty;
         if (foot == Leg.Left)
         {
             if (position < increasingThreshold)

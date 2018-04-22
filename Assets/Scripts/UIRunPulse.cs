@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+
 public class UIRunPulse : MonoBehaviour {
 
     [SerializeField] RunController rc;
@@ -15,6 +17,10 @@ public class UIRunPulse : MonoBehaviour {
     AnimationCurve effortToTargetPulse;
 
     float pulse;
+    public float Pulse
+    {
+        get { return pulse; }
+    }
 
     [SerializeField, Range(0, .5f)]
     float loweringAttack = 0.4f;
@@ -107,7 +113,7 @@ public class UIRunPulse : MonoBehaviour {
     {
         while (true)
         {
-            txt.text = string.Format("{0}bpm", pulse.ToString("000"));
+            txt.text = string.Format("{0}bpm", pulse.ToString("000"));           
             yield return new WaitForSeconds(updateFreq);
         }
     }

@@ -42,6 +42,7 @@ public class HighScoresGateway : MonoBehaviour {
     string service = "unitysocial";
     string game = "birderxrunner";
     string scoresURI = "http://{0}/{1}/{2}/{3}";
+    string allowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖabcdefghijklmnopqrstuvwxyzåäö.?!_- 1234567890";
 
     string ScoresURI(string scoreType)
     {
@@ -69,5 +70,17 @@ public class HighScoresGateway : MonoBehaviour {
         }
 
         return scores;
+    }
+
+    public string SecureName(string name, int maxLenght)
+    {
+        string clean = "";
+        for (int i = 0; i<name.Length; i++)
+        {
+            if (allowedCharacters.IndexOf(name[i]) >= 0) {
+                clean += name[i];
+            }
+        }
+        return clean.Substring(0, Mathf.Min(clean.Length, maxLenght));
     }
 }

@@ -1,3 +1,4 @@
+#! /bin/env python3
 import os
 import hashlib
 
@@ -6,7 +7,7 @@ from flask import Flask, request, abort
 
 app = Flask("HighScores")
 
-MD5 = haslib.md5()
+MD5 = hashlib.md5()
 
 HIGHSCORE = []
 
@@ -53,3 +54,7 @@ def post_highscore():
 @app.route("/highscore", methods=["GET"])
 def get_highscore():
     return HIGHSCORE
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0")

@@ -62,10 +62,11 @@ public class UIPaceMeter : MonoBehaviour
     [SerializeField] AnimationCurve loweringTarget;
     [SerializeField] AnimationCurve sameTarget;
     [SerializeField] AnimationCurve increasingTarget;
+    
     float loweringThreshold;
     float sameThreshold;
     float increasingThreshold;
-    [SerializeField, Range(0, 0.5f)]
+    [SerializeField, Range(0, 2f)]
     float attack = 0.1f;
 
     void SetZoneThresholds()
@@ -87,6 +88,7 @@ public class UIPaceMeter : MonoBehaviour
     }
 
     [SerializeField] AnimationCurve bpmToDifficulty;
+    [SerializeField] AnimationCurve cadanceToDifficulty;
 
     float cadanceDifficulty
     {
@@ -97,7 +99,7 @@ public class UIPaceMeter : MonoBehaviour
             {
                 slope = 2 * Mathf.PI - slope;
             }
-            return 1 + slope + bpmToDifficulty.Evaluate(pulseMeter.Pulse);
+            return 1 + slope + bpmToDifficulty.Evaluate(pulseMeter.Pulse) + cadanceToDifficulty.Evaluate(cadance);
         }
     }
 

@@ -80,7 +80,7 @@ public class UIBirdObsSpeed : MonoBehaviour {
 
     string GetFormattedSpeed()
     {
-        return score.ToString("00.0");
+        return score.ToString("0.0");
     }
 
     public float score

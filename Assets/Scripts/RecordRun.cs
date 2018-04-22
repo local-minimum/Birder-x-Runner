@@ -33,7 +33,11 @@ public class RecordRun : MonoBehaviour {
         if (phase == RunPhase.Start)
         {
             currentStartTime = time;
-        } else if (phase == RunPhase.Goal)
+            bool show = GeneralManager.HasRun();
+            SpriteRenderer[] rends = GetComponentsInChildren<SpriteRenderer>();
+            for (int i = 0; i < rends.Length; i++) rends[i].enabled = show;
+        }
+        else if (phase == RunPhase.Goal)
         {
             currentGoalTime = time;
             float currentTime = currentGoalTime - currentStartTime;
@@ -42,6 +46,8 @@ public class RecordRun : MonoBehaviour {
                 GeneralManager.SetRunRecording(currentRun);
             }
             currentRun.Clear();
+            SpriteRenderer[] rends = GetComponentsInChildren<SpriteRenderer>();
+            for (int i = 0; i < rends.Length; i++) rends[i].enabled = false;
         }
     }
 
@@ -56,9 +62,11 @@ public class RecordRun : MonoBehaviour {
 
     private void Update()
     {
-        if (currentStartTime > 0 && currentGoalTime == 0 && GeneralManager.HasRunRecording())
+        if (currentStartTime > 0 && currentGoalTime == 0 && GeneralManager.HasRunRecord())
         {
             SetShadowPosition();
+        } else
+        {
         }
 
         if (Input.GetKeyDown(KeyCode.R))

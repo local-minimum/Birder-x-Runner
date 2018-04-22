@@ -98,7 +98,7 @@ public class UIRecords : MonoBehaviour {
         texts.Add(ResultsTypes.BirdRunning, new RecordText(
             true,
             "Birding x Running",
-            string.Format("Score: {0}", value.ToString("00.0"))
+            string.Format("Score: {0}", value.ToString("0.0"))
         ));
     }
 
@@ -107,25 +107,22 @@ public class UIRecords : MonoBehaviour {
         texts.Add(ResultsTypes.BirdRunning, new RecordText(
             value > record,
             "Birding x Running",
-            string.Format("Score: {0} (Record {1})", value.ToString("00.0"), record.ToString("00.0"))
+            string.Format("Score: {0} (Record {1})", value.ToString("0.0"), record.ToString("0.0"))
         ));
     }
 
+    bool waiting;
+    float showStart;
+    int showIndex;
     IEnumerator<WaitForSeconds> ShowResults()
     {
         ResultsTypes[] typeOrder = {ResultsTypes.Birding, ResultsTypes.BirdRunning, ResultsTypes.Running};
-        int showIndex = -1;
-        bool waiting = false;
-        float showStart = Time.time;
+        showIndex = -1;
+        waiting = false;
+        showStart = Time.time;
         while (true)
         {
-            if (waiting)
-            {
-                if (Input.anyKeyDown && (showIndex > 0 || Time.time - showStart > 1))
-                {
-                    waiting = false;
-                }
-            } else
+            if (!waiting)
             {
                 int nextIndex = showIndex + 1;
                 if (nextIndex == 3)
@@ -146,5 +143,16 @@ public class UIRecords : MonoBehaviour {
             yield return new WaitForSeconds(0.02f);
         }
         recordsRoot.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (waiting)
+        {
+            if (Input.anyKeyDown && (showIndex > 0 || Time.time - showStart > 1))
+            {
+                waiting = false;
+            }
+        }
     }
 }

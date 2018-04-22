@@ -34,7 +34,7 @@ public class UIRunClock : MonoBehaviour {
         {
             endTime = time;
             float runTime = endTime - startTime;
-            if (GeneralManager.HasRunRecording())
+            if (GeneralManager.HasRunRecord())
             {
                 
                 uiRecords.ShowRunnerResult(runTime, GeneralManager.GetRunTimeRecord());

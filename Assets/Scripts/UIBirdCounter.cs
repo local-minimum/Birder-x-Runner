@@ -38,7 +38,7 @@ public class UIBirdCounter : MonoBehaviour {
         if (phase == RunPhase.Goal)
         {
             observing = false;
-            if (GeneralManager.HasBirdingRecording())
+            if (GeneralManager.HasBirdingRecord())
             {
                 uiRecords.ShowBirderResult(score, GeneralManager.GetBirdingRecord());
             } else

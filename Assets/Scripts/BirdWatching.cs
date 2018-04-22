@@ -70,6 +70,7 @@ public class BirdWatching : MonoBehaviour {
                if (OnBirdWatched != null) OnBirdWatched(species);
                 obsProgressImage.enabled = false;
                 completed = true;
+                GetComponentInChildren<BirdObsEffects>().Trigger();
             }
         } else if (hovered && Input.GetMouseButtonDown(0))
         {

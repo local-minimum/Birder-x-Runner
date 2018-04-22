@@ -102,12 +102,14 @@ public class RunController : MonoBehaviour {
     }
 
     [SerializeField] float rayU = 0.1f;
+    [SerializeField] LayerMask groundChecks;
+    [SerializeField] float rayLength = 3;
 
     ElevationSlope GetGround (Vector3 pos)
     {
-        RaycastHit2D hitCenter = Physics2D.Raycast(pos, Vector3.down);
-        RaycastHit2D hitBehind = Physics2D.Raycast(pos, Vector3.down + Vector3.left * rayU);
-        RaycastHit2D hitForward = Physics2D.Raycast(pos, Vector3.down + Vector3.right * rayU);
+        RaycastHit2D hitCenter = Physics2D.Raycast(pos, Vector3.down, rayLength, groundChecks, -2);
+        RaycastHit2D hitBehind = Physics2D.Raycast(pos, Vector3.down + Vector3.left * rayU, rayLength, groundChecks, -2);
+        RaycastHit2D hitForward = Physics2D.Raycast(pos, Vector3.down + Vector3.right * rayU, rayLength, groundChecks, -2);
         return new ElevationSlope(
             GetGroundElevation(hitCenter, hitBehind, hitForward),
             GetGroundSlope(hitCenter, hitBehind, hitForward));

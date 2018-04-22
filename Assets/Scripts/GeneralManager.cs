@@ -58,12 +58,17 @@ public class GeneralManager : MonoBehaviour {
         instance.bestBirdRun = record;
     }
 
-    public static bool HasRunRecording()
+    public static bool HasRun()
+    {
+        return instance.runRecording.Count > 0;
+    }
+
+    public static bool HasRunRecord()
     {
         return instance.bestRunTime > 0;
     }
 
-    public static bool HasBirdingRecording()
+    public static bool HasBirdingRecord()
     {
         return instance.bestBirdScore > 0;
     }

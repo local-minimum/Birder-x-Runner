@@ -6,7 +6,7 @@
 
 ## Utveckla
 * Poängräkning: fåglar/tid, arter/tid, vikta arter, highscore för segment
-* Spelmekanik: ~Viktad fågelpoäng~, ~inzoomat spelfält (bug)~, lutnings vektor, pulsmätare, fågelläten som cue, stegljud
+* Spelmekanik: ~Viktad fågelpoäng~, ~inzoomat spelfält (bug)~, ~lutnings vektor~, ~pulsmätare~, dynamisk pace difficulty, visa observationsstatus på fåglarna, fågelläten som cue, stegljud
 * Assets: fler arter, baktrunder, animerad spelare, animationer, ljud, musik,
 
 ## Poängräkning
@@ -53,12 +53,13 @@
 * Progressfart ökar när muspekaren är över fågeln
 * Full progress bar är observerad fågel
 * Fortsätta observationen när individen kommer tillbaka
+* Visa att fågeln har observerats
 
 ### Intro
 * Introbild: nåt med springa/löpning och nåt helt annat med fågelskådning
 * Backstory: två separata utan koppling.
-  * Fågel + tid: Vi är i det sjätte massutdöende. Vi behöver kartlägga vilka fåglar som finns innan de försvinner, så snabbt som möjligt!
-  * Löpning + sträcka: Anna brukar springa en kilometer på morgonen varje dag innan hon dricker sitt kaffe. Träningsvärken efter på jobbet känns bra - ett kvitto på att hon åstadkommit något! 
+  * Fågel + tid: We are currently in Earths sixth mass extinction. Species after species are falling prey to humans every hour and minute. In order to save them, we must observe them before they disappear - as fast as humanly possible! 
+   * Löpning + sträcka: Every morning, Anna goes for a run just after her coffee. At work, she's competing with Isaiah who's doing the run in just X [seconds/minutes]. Will she beat him?
 
 ### Övrigt
 * Tidigare spelomgång som skugga i nuvarande spel

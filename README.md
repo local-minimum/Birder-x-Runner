@@ -6,7 +6,7 @@
 
 ## Utveckla
 * Poängräkning: fåglar/tid, arter/tid, vikta arter, highscore för segment
-* Spelmekanik: ~Viktad fågelpoäng~, ~inzoomat spelfält (bug)~, ~lutnings vektor~, ~pulsmätare~, ~dynamisk pace difficulty~, visa observationsstatus på fåglarna, fågelläten som cue, stegljud
+* Spelmekanik: ~Viktad fågelpoäng~, ~inzoomat spelfält (bug)~, ~lutnings vektor~, ~pulsmätare~, ~dynamisk pace difficulty~, visa ~observationsstatus på fåglarna~, inte kunna dubbel vänster stega, fågelläten som cue, stegljud
 * Assets: fler arter, baktrunder, animerad spelare, animationer, ljud, musik,
 
 ## Poängräkning

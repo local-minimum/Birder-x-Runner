@@ -5,6 +5,17 @@ using UnityEngine;
 public delegate void GPSEvent(Vector2 pos);
 
 public class RunController : MonoBehaviour {
+    struct ElevationSlope
+    {
+        public float elevation;
+        public float slope;
+
+        public ElevationSlope(float elevation, float slope)
+        {
+            this.elevation = elevation;
+            this.slope = slope;
+        }
+    }
 
     public event GPSEvent OnGPS;
 
@@ -18,7 +29,7 @@ public class RunController : MonoBehaviour {
 
     private void Start()
     {
-        deltaY = transform.position.y - GetGroundElevation(transform.position);
+        deltaY = transform.position.y - GetGround(transform.position).elevation;
     }
 
     [SerializeField]
@@ -73,36 +84,64 @@ public class RunController : MonoBehaviour {
     {
         speed = pacer.Speed;
         Vector3 pos = transform.position;
-        pos.x += speed * Time.deltaTime;
-        pos.y = GetGroundElevation(pos) + deltaY;
+        ElevationSlope elevationSlope = GetGround(pos);
+        pos.x += Mathf.Cos(elevationSlope.slope) * speed * Time.deltaTime;
+        elevationSlope = GetGround(pos);
+        pos.y = elevationSlope.elevation + deltaY;
         transform.position = pos;
     }
 
     [SerializeField] float rayU = 0.1f;
 
-    float GetGroundElevation (Vector3 pos)
+    ElevationSlope GetGround (Vector3 pos)
     {
         RaycastHit2D hitCenter = Physics2D.Raycast(pos, Vector3.down);
         RaycastHit2D hitBehind = Physics2D.Raycast(pos, Vector3.down + Vector3.left * rayU);
         RaycastHit2D hitForward = Physics2D.Raycast(pos, Vector3.down + Vector3.right * rayU);
-        Vector2 refPoint;
+        return new ElevationSlope(
+            GetGroundElevation(hitCenter, hitBehind, hitForward),
+            GetGroundSlope(hitCenter, hitBehind, hitForward));
+    }
+
+    float GetGroundElevation(RaycastHit2D hitCenter, RaycastHit2D hitBehind, RaycastHit2D hitForward)
+    {
         if (hitCenter)
         {
-            refPoint = hitCenter.point;
-        } else if (hitBehind && hitForward)
+            return hitCenter.point.y;
+        }
+        else if (hitBehind && hitForward)
         {
-            refPoint = Vector2.Lerp(hitBehind.point, hitForward.point, 0.5f);
-        } else if (hitBehind)
+            return Vector2.Lerp(hitBehind.point, hitForward.point, 0.5f).y;
+        }
+        else if (hitBehind)
         {
-            refPoint = hitBehind.point;
-        } else if (hitForward)
+            return hitBehind.point.y;
+        }
+        else if (hitForward)
         {
-            refPoint = hitForward.point;
-        } else
+            return hitForward.point.y;
+        }
+        else
         {
             Debug.LogWarning("Could not find ground");
             return transform.position.y;
         }
-        return refPoint.y;
+    }
+
+    float GetGroundSlope(RaycastHit2D hitCenter, RaycastHit2D hitBehind, RaycastHit2D hitForward)
+    {
+        if (hitBehind && hitForward)
+        {
+            return Mathf.Atan2(hitForward.point.y - hitBehind.point.y, hitForward.point.x - hitBehind.point.x);
+        } else if (hitCenter && hitForward)
+        {
+            return Mathf.Atan2(hitForward.point.y - hitCenter.point.y, hitForward.point.x - hitCenter.point.x);
+        } else if (hitCenter && hitBehind)
+        {
+            return Mathf.Atan2(hitCenter.point.y - hitBehind.point.y, hitCenter.point.x - hitBehind.point.x);
+        }
+
+        Debug.LogWarning("Could not find enough ground to calculate slope");
+        return 0;
     }
 }

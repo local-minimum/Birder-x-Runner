@@ -73,12 +73,18 @@ public class Pacer : MonoBehaviour {
 
         if (Input.GetKeyDown(leftKey))
         {
-            UpdatePace(uiPaceMeter.Score(Leg.Left));
-            lastStep = uiPaceMeter.Steps;
+            if (uiPaceMeter.Steps > lastStep)
+            {
+                UpdatePace(uiPaceMeter.Score(Leg.Left));
+                lastStep = uiPaceMeter.Steps;
+            }
         } else if (Input.GetKeyDown(rightKey))
         {
-            UpdatePace(uiPaceMeter.Score(Leg.Right));
-            lastStep = uiPaceMeter.Steps;
+            if (uiPaceMeter.Steps > lastStep)
+            {
+                UpdatePace(uiPaceMeter.Score(Leg.Right));
+                lastStep = uiPaceMeter.Steps;
+            }
         }
     }
 

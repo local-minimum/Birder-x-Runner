@@ -20,7 +20,7 @@ def get_secret():
 
 
 def get_concatenated_request(req):
-    return "{}{}{}".format(
+    return "{}{}{}{}{}".format(
         req["name"],
         req["score1"],
         req["score2"],

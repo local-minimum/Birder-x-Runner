@@ -6,7 +6,7 @@ from flask import Flask, request, abort
 
 app = Flask("HighScores")
 
-MD5 = haslib.md5()
+MD5 = hashlib.md5()
 
 HIGHSCORE = []
 

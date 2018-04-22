@@ -8,10 +8,12 @@ public enum Leg { Left, Right };
 public enum PaceEffect { Increase, Same, Decrease, Fumble };
 
 public delegate void StepEvent(int steps, Leg leg);
+public delegate void MidStep(int steps);
 
 public class UIPaceMeter : MonoBehaviour
 {
     public event StepEvent OnStep;
+    public event MidStep OnMidStep;
 
     [SerializeField] Image[] loweringPaceImages;
     [SerializeField] Image[] samePaceImages;
@@ -111,10 +113,16 @@ public class UIPaceMeter : MonoBehaviour
         }
     }
 
+    float previousPosition;
+
     void SetCadancePosition()
     {
         float progress = cadanceProgress;
         position += direction * progress;
+        if (Mathf.Sign(previousPosition - 0.5f) != Mathf.Sign(position - 0.5f))
+        {
+            if (OnMidStep != null) OnMidStep(steps);
+        }
         if (direction > 0 && position > 1f)
         {
             position = 1f;
@@ -131,6 +139,7 @@ public class UIPaceMeter : MonoBehaviour
         }
         paceMarker.anchorMin = new Vector2(position, stepMarkerYmin);
         paceMarker.anchorMax = new Vector2(position, stepMarkerYmax);
+        if (position != 0.5f) previousPosition = position;
     }
 
     void GetMarkerYSize()
@@ -141,6 +150,10 @@ public class UIPaceMeter : MonoBehaviour
 
     public PaceEffect Score(Leg foot)
     {
+        if (foot == Leg.Left && position > 0.5f || foot == Leg.Right && position < 0.5f)
+        {
+            return PaceEffect.Same;
+        }
         float difficulty = cadanceDifficulty;
         if (foot == Leg.Left)
         {
@@ -174,6 +187,13 @@ public class UIPaceMeter : MonoBehaviour
     {
         get
         {
+            if (direction > 0 && position > 0.5f)
+            {
+                return steps + 1;
+            } else if (direction < 0 && position < 0.5f)
+            {
+                return steps + 1;
+            }
             return steps;
         }
     }

@@ -26,14 +26,14 @@ public class Pacer : MonoBehaviour {
 
     private void OnEnable()
     {
-        uiPaceMeter.OnStep += UiPaceMeter_OnStep;
+        uiPaceMeter.OnMidStep += OnMidStep;
         start.OnRunStart += HandleRunEvent;
         goal.OnRunGoal += HandleRunEvent;
     }
 
     private void OnDisable()
     {
-        uiPaceMeter.OnStep -= UiPaceMeter_OnStep;
+        uiPaceMeter.OnMidStep -= OnMidStep;
         start.OnRunStart -= HandleRunEvent;
         goal.OnRunGoal -= HandleRunEvent;
     }
@@ -54,9 +54,9 @@ public class Pacer : MonoBehaviour {
 
     [SerializeField] float missedStepFactor;
 
-    private void UiPaceMeter_OnStep(int steps, Leg leg)
+    private void OnMidStep(int steps)
     {
-        if (steps > lastStep + 1)
+        if (steps > lastStep)
         {
             cadance -= cadanceDecrease.Evaluate(cadance) * missedStepFactor;
             cadance = Mathf.Max(cadance, 0);

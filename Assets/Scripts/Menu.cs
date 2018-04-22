@@ -23,6 +23,7 @@ public class Menu : MonoBehaviour {
     public void LoadHighscore()
     {
         PlayerPrefs.SetString("Highscore.NextScene", "Scenes/menu");
+        PlayerPrefs.SetString("Highscore.NextSceneName", "Menu");
         SceneManager.LoadScene("Scenes/highscore");
     }
 

@@ -45,6 +45,7 @@ public class UIRunNav : MonoBehaviour {
     public void LoadHighscore()
     {
         PlayerPrefs.SetString("Highscore.NextScene", "Scenes/1k");
+        PlayerPrefs.SetString("Highscore.NextSceneName", "Re-run!");
         SceneManager.LoadScene("Scenes/highscore");
     }
 }

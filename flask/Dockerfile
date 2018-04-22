@@ -3,5 +3,6 @@ pip install flask tinydb
 
 COPY app.py /app/app.py
 RUN mkdir /app/db
+WORKDIR /app
 
-CMD python /app/app.py
+CMD python3 app.py

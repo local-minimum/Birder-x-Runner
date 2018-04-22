@@ -1,3 +1,4 @@
+#! /bin/env python3
 import os
 import hashlib
 
@@ -53,3 +54,7 @@ def post_highscore():
 @app.route("/highscore", methods=["GET"])
 def get_highscore():
     return HIGHSCORE
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0")

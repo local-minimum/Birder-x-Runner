@@ -792,7 +792,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 0
   pacer: {fileID: 991524699}
-  attack: 0.5
+  attack: 0.7
   xOffset:
     serializedVersion: 2
     m_Curve:

@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour {
     [SerializeField]
     Pacer pacer;
 
-    [SerializeField, Range(0, 1)]
+    [SerializeField, Range(0, 5)]
     float attack;
 
     [SerializeField]
@@ -32,8 +32,8 @@ public class CameraController : MonoBehaviour {
         //Debug.Log(pacer.Speed);
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, speedToViewSize.Evaluate(pacer.Speed), attack * Time.deltaTime);
         Vector3 localPos = transform.localPosition;
-        localPos.x = Mathf.Lerp(localPos.x, xOffset.Evaluate(cam.orthographicSize), attack);
-        localPos.y = Mathf.Lerp(localPos.y, yOffset.Evaluate(cam.orthographicSize), attack);
+        localPos.x = Mathf.Lerp(localPos.x, xOffset.Evaluate(cam.orthographicSize), attack * Time.deltaTime);
+        localPos.y = Mathf.Lerp(localPos.y, yOffset.Evaluate(cam.orthographicSize), attack * Time.deltaTime);
         localPos.z = zOffset;
         transform.localPosition = localPos;
     }

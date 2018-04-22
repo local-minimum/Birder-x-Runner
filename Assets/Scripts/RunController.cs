@@ -19,7 +19,6 @@ public class RunController : MonoBehaviour {
     private void Start()
     {
         deltaY = transform.position.y - GetGroundElevation(transform.position);
-        Debug.Log(deltaY);
     }
 
     [SerializeField]

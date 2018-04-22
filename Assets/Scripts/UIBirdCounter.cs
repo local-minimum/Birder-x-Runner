@@ -73,7 +73,12 @@ public class UIBirdCounter : MonoBehaviour {
     {
         get
         {
-            return observations.Keys.Count;
+            int score = 0;
+            foreach (int count in observations.Values)
+            {
+                score += 5 + 3 * Mathf.Clamp(count - 1, 0, 1) + 2 * Mathf.Clamp(count - 2, 0, 2) + Mathf.Max(0, count - 4);
+            }
+            return score;
         }
     }
 }

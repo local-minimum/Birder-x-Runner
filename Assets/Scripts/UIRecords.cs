@@ -5,10 +5,18 @@ using UnityEngine.UI;
 
 public class UIRecords : MonoBehaviour {
 
-    [SerializeField] GameObject recordsRoot;
-    [SerializeField] GameObject recordGO;
-    [SerializeField] Text text;
-    [SerializeField] Text title;
+    [SerializeField] GameObject recordsBirdingRoot;
+    [SerializeField] GameObject recordBirdingGO;    
+    [SerializeField] Text recordBirdingText;
+
+    [SerializeField] GameObject recordsBirdRunningRoot;
+    [SerializeField] GameObject recordBirdRunningGO;
+    [SerializeField] Text recordBirdRunningText;
+
+    [SerializeField] GameObject recordsRunningRoot;
+    [SerializeField] GameObject recordRunningGO;
+    [SerializeField] Text recordRunningText;
+
     [SerializeField] Goal goal;
 
     enum ResultsTypes { Birding, Running, BirdRunning };
@@ -16,12 +24,10 @@ public class UIRecords : MonoBehaviour {
     struct RecordText
     {
         public bool isRecord;
-        public string title;
         public string text;
-        public RecordText(bool isRecord, string title, string text)
+        public RecordText(bool isRecord, string text)
         {
             this.isRecord = isRecord;
-            this.title = title;
             this.text = text;
         }
     }
@@ -29,7 +35,9 @@ public class UIRecords : MonoBehaviour {
     Dictionary<ResultsTypes, RecordText> texts = new Dictionary<ResultsTypes, RecordText>();
 
 	void Start () {
-        recordsRoot.SetActive(false);
+        recordsBirdingRoot.SetActive(false);
+        recordsBirdRunningRoot.SetActive(false);
+        recordsRunningRoot.SetActive(false);
 	}
 
     private void OnEnable()
@@ -54,7 +62,6 @@ public class UIRecords : MonoBehaviour {
     {       
         texts.Add(ResultsTypes.Birding, new RecordText(
             true,
-            "Birding",
             string.Format("Score: {0}", score.ToString("000"))
         ));
     }
@@ -63,7 +70,6 @@ public class UIRecords : MonoBehaviour {
     {
         texts.Add(ResultsTypes.Birding, new RecordText(
             score > record,
-            "Birding",
             string.Format("Score: {0} (Record: {1})", score.ToString("000"), record.ToString("000"))
         ));
     }
@@ -73,7 +79,6 @@ public class UIRecords : MonoBehaviour {
         int minutes = Mathf.FloorToInt(time / 60);
         texts.Add(ResultsTypes.Running, new RecordText(
             true,
-            "Running",
             string.Format("{0}:{1}", minutes.ToString("00"), (time - minutes).ToString("00.000"))
         ));
     }
@@ -84,7 +89,6 @@ public class UIRecords : MonoBehaviour {
         int minutes = Mathf.FloorToInt(time / 60);
         texts.Add(ResultsTypes.Running, new RecordText(
             time < record,
-            "Running",
             string.Format(
                 "{0}:{1} (Record {2}:{3})",
                 minutes.ToString("00"),
@@ -97,7 +101,6 @@ public class UIRecords : MonoBehaviour {
     {        
         texts.Add(ResultsTypes.BirdRunning, new RecordText(
             true,
-            "Birding x Running",
             string.Format("Score: {0}", value.ToString("0.0"))
         ));
     }
@@ -106,53 +109,42 @@ public class UIRecords : MonoBehaviour {
     {
         texts.Add(ResultsTypes.BirdRunning, new RecordText(
             value > record,
-            "Birding x Running",
             string.Format("Score: {0} (Record {1})", value.ToString("0.0"), record.ToString("0.0"))
         ));
     }
 
-    bool waiting;
     float showStart;
     int showIndex;
     IEnumerator<WaitForSeconds> ShowResults()
     {
         ResultsTypes[] typeOrder = {ResultsTypes.Birding, ResultsTypes.BirdRunning, ResultsTypes.Running};
-        showIndex = -1;
-        waiting = false;
-        showStart = Time.time;
-        while (true)
+        showIndex = 0;
+        RecordText data;
+        while (showIndex < typeOrder.Length)
         {
-            if (!waiting)
-            {
-                int nextIndex = showIndex + 1;
-                if (nextIndex == 3)
-                {
+            yield return new WaitForSeconds(0.4f);
+        
+            switch (typeOrder[showIndex]) {
+                case ResultsTypes.Birding:
+                    data =  texts[ResultsTypes.Birding];
+                    recordBirdingText.text = data.text;
+                    recordBirdingGO.SetActive(data.isRecord);
+                    recordsBirdingRoot.SetActive(true);
                     break;
-                }
-                if (texts.ContainsKey(typeOrder[nextIndex]))
-                {
-                    waiting = true;
-                    var data =  texts[typeOrder[nextIndex]];
-                    title.text = data.title;
-                    text.text = data.text;
-                    recordGO.SetActive(data.isRecord);
-                    showIndex++;
-                    if (nextIndex == 0) recordsRoot.SetActive(true);
-                }
-            } 
-            yield return new WaitForSeconds(0.02f);
-        }
-        recordsRoot.SetActive(false);
-    }
-
-    private void Update()
-    {
-        if (waiting)
-        {
-            if (Input.anyKeyDown && (showIndex > 0 || Time.time - showStart > 1))
-            {
-                waiting = false;
+                case ResultsTypes.BirdRunning:
+                    data = texts[ResultsTypes.BirdRunning];
+                    recordBirdRunningText.text = data.text;
+                    recordBirdRunningGO.SetActive(data.isRecord);
+                    recordsBirdRunningRoot.SetActive(true);
+                    break;
+                case ResultsTypes.Running:
+                    data = texts[ResultsTypes.Running];
+                    recordRunningText.text = data.text;
+                    recordRunningGO.SetActive(data.isRecord);
+                    recordsRunningRoot.SetActive(true);
+                    break;
             }
+            showIndex++;
         }
     }
 }

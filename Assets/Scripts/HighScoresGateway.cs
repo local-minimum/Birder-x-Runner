@@ -95,8 +95,6 @@ public class HighScoresGateway : MonoBehaviour {
         System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create();
         byte[] hash = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(msg));
         string checkSum = System.BitConverter.ToString(hash).Replace("-", string.Empty);
-        Debug.Log(msg);
-        Debug.Log(checkSum);
         return checkSum;
     }
 

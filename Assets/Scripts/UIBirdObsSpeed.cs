@@ -65,6 +65,7 @@ public class UIBirdObsSpeed : MonoBehaviour {
             {
                 GeneralManager.SetBirdRunRecord(score);
             }
+            GeneralManager.RecentRunBirdingXRunning = score;
         }
     }
 

@@ -49,6 +49,7 @@ public class UIBirdCounter : MonoBehaviour {
             {
                 GeneralManager.SetBirdingRecord(score);
             }
+            GeneralManager.RecentRunBirding = score;
         }
     }
 

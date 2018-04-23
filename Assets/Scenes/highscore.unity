@@ -370,7 +370,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreType: running
-  sort: 0
   gateway: {fileID: 729447135}
   scoreBoardPrefab: {fileID: 114455895911283644, guid: d076bc9935029f54cb6c5234b363e6f1,
     type: 2}
@@ -678,6 +677,10 @@ MonoBehaviour:
   gateway: {fileID: 729447135}
   playerName: {fileID: 515380907}
   btn: {fileID: 411244286}
+  status: {fileID: 1753452938}
+  birdingScores: {fileID: 1983056650}
+  birdingxrunningScores: {fileID: 2008256470}
+  runningScores: {fileID: 303693604}
 --- !u!1 &562165283
 GameObject:
   m_ObjectHideFlags: 0
@@ -1020,6 +1023,7 @@ MonoBehaviour:
   game: birderxrunner
   scoresURI: http://{0}/{1}/{2}/{3}
   scoresNoServiceURI: http://{0}/highscore/{1}/{2}
+  notTakenName: '[EMPTY]'
 --- !u!114 &729447136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1032,6 +1036,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   btnText: {fileID: 902883341}
+  recentText: {fileID: 1753452936}
+  recentInput: {fileID: 515380905}
+  recentSubmit: {fileID: 411244284}
 --- !u!1 &902883339
 GameObject:
   m_ObjectHideFlags: 0
@@ -1676,7 +1683,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreType: birding
-  sort: 0
   gateway: {fileID: 729447135}
   scoreBoardPrefab: {fileID: 114455895911283644, guid: d076bc9935029f54cb6c5234b363e6f1,
     type: 2}
@@ -1795,7 +1801,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreType: birdingxrunning
-  sort: 0
   gateway: {fileID: 729447135}
   scoreBoardPrefab: {fileID: 114455895911283644, guid: d076bc9935029f54cb6c5234b363e6f1,
     type: 2}

@@ -2,6 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct RunResult
+{
+    public float time;
+    public float birdingSpeed;
+    public int birdingScore;
+
+    public RunResult(int birdingScore, float birdingSpeed, float time)
+    {
+        this.time = time;
+        this.birdingScore = birdingScore;
+        this.birdingSpeed = birdingSpeed;
+    }
+}
+
 public class GeneralManager : MonoBehaviour {
 
     static GeneralManager _instance;
@@ -138,4 +152,65 @@ public class GeneralManager : MonoBehaviour {
 
     [SerializeField]
     float bestBirdRun;
+    
+    static float recentRunTime;
+    static int recentRunBirding;
+    static float recentRunBirdingXRunning;
+    static int submissionStatus = 0;
+
+    public static float RecentRunTime
+    {
+        set
+        {
+            recentRunTime = value;
+            submissionStatus += 1;
+        }
+
+        get
+        {
+            return recentRunTime;
+        }
+    }
+
+    public static int RecentRunBirding
+    {
+        set
+        {
+            recentRunBirding = value;
+            submissionStatus += 1;
+        }
+
+        get
+        {
+            return recentRunBirding;
+        }
+    }
+
+    public static float RecentRunBirdingXRunning
+    {
+        set
+        {
+            recentRunBirdingXRunning = value;
+            submissionStatus += 1;
+        }
+
+        get
+        {
+            return recentRunBirdingXRunning;
+        }
+    }
+
+    public static bool CanSubmit
+    {
+        get
+        {
+            return submissionStatus >= 3;
+        }
+    } 
+    
+    public static RunResult GetSubmiss()
+    {
+        submissionStatus = 0;
+        return new RunResult(recentRunBirding, recentRunBirdingXRunning, recentRunTime);
+    }
 }

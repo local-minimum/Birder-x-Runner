@@ -48,6 +48,7 @@ public class UIRunClock : MonoBehaviour {
             {
                 GeneralManager.SetRunRecord(runTime);
             }
+            GeneralManager.RecentRunTime = runTime;
         }
     }
 

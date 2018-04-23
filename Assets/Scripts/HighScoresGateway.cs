@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Networking;
 
 public enum ScoresSort { Ascending, Descending };
 public struct ScoreEntry
@@ -39,12 +39,24 @@ public class HighScoresGateway : MonoBehaviour {
     [SerializeField]
     int nScores = 10;
 
+    [SerializeField]
     string host = "212.85.82.181";
+
+    [SerializeField]
     string service = "unitysocial";
+
+    [SerializeField]
     string game = "birderxrunner";
+
+    [SerializeField]
     string scoresURI = "http://{0}/{1}/{2}/{3}";
 
     string allowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.?!_- 1234567890";
+
+    private void Start()
+    {
+        GetChecksum("Local Minimum", "10");
+    }
 
     string ScoresURI(string scoreType)
     {
@@ -56,14 +68,33 @@ public class HighScoresGateway : MonoBehaviour {
         return string.Format(scoresURI, host, service, game, scoreType) + string.Format("?count={0}", count);
     }
 
-    public void GetHighscores(string scoreType, System.Action<List<ScoreEntry>> callback)
+    public void GetHighscores(string scoreType, System.Action<List<ScoreEntry>> callback, System.Action<string> errorCallback)
     {
         string uri = ScoresURI(scoreType, nScores);
-        Debug.Log(uri);
-        UnityWebRequest.Post
-        WWW www = WWW.LoadFromCacheOrDownload(uri, cacheIdx);
-        StartCoroutine(Downloader(www, callback));
-        
+        UnityWebRequest request = UnityWebRequest.Get(uri);
+        StartCoroutine(Communicator(request, callback, errorCallback));
+    }
+
+    public void PostResult(string scoreType, string name, string score, System.Action<List<ScoreEntry>> callback, System.Action<string> errorCallback)
+    {
+        string uri = ScoresURI(scoreType, nScores);
+        string checkSum = GetChecksum(name, score);
+        Dictionary<string, string> data = new Dictionary<string, string>();
+        data.Add("name", name);
+        data.Add("score", score);
+        data.Add("checkSum", checkSum);
+        UnityWebRequest request = UnityWebRequest.Post(uri, data);
+        StartCoroutine(Communicator(request, callback, errorCallback));
+    }
+
+    string GetChecksum(string name, string score)
+    {
+        string msg = name + score + "mylittlesecret";
+        System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create();
+        byte[] hash = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(msg));
+        string checkSum = System.BitConverter.ToString(hash).Replace("-", string.Empty);
+        Debug.Log(checkSum);
+        return checkSum;
     }
 
 
@@ -81,13 +112,26 @@ public class HighScoresGateway : MonoBehaviour {
         return scores;
     }
 
-    IEnumerator<WaitForSeconds> Downloader(WWW www, System.Action<List<ScoreEntry>> callback)
+    IEnumerator<WaitForSeconds> Communicator(UnityWebRequest request, System.Action<List<ScoreEntry>> callback, System.Action<string> errorCallback)
     {
-        while (!www.isDone)
+        request.SendWebRequest();
+        while (!request.isDone)
         {
             yield return new WaitForSeconds(0.25f);
         }
-        callback(ParseList(www.text));
+        if (request.isNetworkError)
+        {
+            errorCallback("Could not connect to highscores server");
+        }
+        else if (request.isHttpError)
+        {
+            errorCallback("Highscores server not happy with what you are doing");
+        }
+        else
+        {
+            List<ScoreEntry> response = ParseList(request.downloadHandler.text);            
+            callback(response);
+        }
     }
 
     public string SecureName(string name, int maxLenght)

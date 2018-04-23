@@ -1015,6 +1015,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nScores: 10
+  host: 212.85.82.181
+  service: unitysocial
+  game: debug
+  scoresURI: http://{0}/{1}/{2}/{3}
 --- !u!114 &729447136
 MonoBehaviour:
   m_ObjectHideFlags: 0

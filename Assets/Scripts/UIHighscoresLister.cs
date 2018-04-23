@@ -11,7 +11,7 @@ public class UIHighscoresLister : MonoBehaviour {
 
     private void Start()
     {
-        gateway.GetHighscores(scoreType, ListScores);
+        gateway.GetHighscores(scoreType, ListScores, HandleError);
     }
 
     void ListScores(List<ScoreEntry> scores)
@@ -23,5 +23,10 @@ public class UIHighscoresLister : MonoBehaviour {
             board.SetScore(scores[i].rank, scores[i].name, scores[i].score);
         }
 
+    }
+
+    void HandleError(string errMsg)
+    {
+        Debug.LogError(errMsg);
     }
 }

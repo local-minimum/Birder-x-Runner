@@ -6,6 +6,7 @@
 [Oo]bj/
 [Bb]uilds/
 /[Mm]edia/
+*.no-git.*
 
 #Unity3D Generated File On Crash Reports
 sysinfo.txt

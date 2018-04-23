@@ -1015,10 +1015,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nScores: 10
-  host: 212.85.82.181
-  service: unitysocial
-  game: debug
+  host: 192.168.1.117:5054
+  service: 
+  game: birderxrunner
   scoresURI: http://{0}/{1}/{2}/{3}
+  scoresNoServiceURI: http://{0}/highscore/{1}/{2}
 --- !u!114 &729447136
 MonoBehaviour:
   m_ObjectHideFlags: 0

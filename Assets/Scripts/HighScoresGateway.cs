@@ -49,23 +49,25 @@ public class HighScoresGateway : MonoBehaviour {
     string game = "birderxrunner";
 
     [SerializeField]
-    string scoresURI = "http://{0}/{1}/{2}/{3}";
+    string scoresURI = "http://{0}/{1}/highscore/{2}/{3}";
+
+    [SerializeField]
+    string scoresNoServiceURI = "http://{0}/highscore/{1}/{2}";
 
     string allowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.?!_- 1234567890";
 
-    private void Start()
-    {
-        GetChecksum("Local Minimum", "10");
-    }
-
     string ScoresURI(string scoreType)
     {
+        if (string.IsNullOrEmpty(service))
+        {
+            return string.Format(scoresNoServiceURI, host, game, scoreType);
+        }
         return string.Format(scoresURI, host, service, game, scoreType);
     }
 
     string ScoresURI(string scoreType, int count)
     {
-        return string.Format(scoresURI, host, service, game, scoreType) + string.Format("?count={0}", count);
+        return ScoresURI(scoreType) + string.Format("?count={0}", count);
     }
 
     public void GetHighscores(string scoreType, System.Action<List<ScoreEntry>> callback, System.Action<string> errorCallback)
@@ -93,10 +95,12 @@ public class HighScoresGateway : MonoBehaviour {
         System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create();
         byte[] hash = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(msg));
         string checkSum = System.BitConverter.ToString(hash).Replace("-", string.Empty);
+        Debug.Log(msg);
         Debug.Log(checkSum);
         return checkSum;
     }
 
+    [SerializeField] string notTakenName = "[EMPTY]";
 
     public List<ScoreEntry> PadScoreList(List<ScoreEntry> scores)
     {
@@ -104,7 +108,7 @@ public class HighScoresGateway : MonoBehaviour {
         {
             scores.Add(new ScoreEntry(
                 i + 1,
-                "...",
+                notTakenName,
                 ""
             ));
         }

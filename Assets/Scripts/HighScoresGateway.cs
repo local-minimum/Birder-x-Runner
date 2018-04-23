@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public enum ScoresSort { Ascending, Descending };
 public struct ScoreEntry
 {
@@ -42,6 +43,7 @@ public class HighScoresGateway : MonoBehaviour {
     string service = "unitysocial";
     string game = "birderxrunner";
     string scoresURI = "http://{0}/{1}/{2}/{3}";
+
     string allowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.?!_- 1234567890";
 
     string ScoresURI(string scoreType)
@@ -58,12 +60,13 @@ public class HighScoresGateway : MonoBehaviour {
     {
         string uri = ScoresURI(scoreType, nScores);
         Debug.Log(uri);
-        int cacheIdx = PlayerPrefs.GetInt("Highscores.Cache", 1);
+        UnityWebRequest.Post
         WWW www = WWW.LoadFromCacheOrDownload(uri, cacheIdx);
         StartCoroutine(Downloader(www, callback));
-        PlayerPrefs.SetInt("Highscores.Cache", cacheIdx + 1);
         
     }
+
+
     public List<ScoreEntry> PadScoreList(List<ScoreEntry> scores)
     {
         for (int i = scores.Count; i < nScores; i++)

@@ -11,11 +11,17 @@ public class UIHighscoresLister : MonoBehaviour {
 
     private void Start()
     {
-        List<ScoreEntry> scores = gateway.GetHighscores(scoreType);
-        for (int i=0, l=scores.Count; i<l; i++)
+        gateway.GetHighscores(scoreType, ListScores);
+    }
+
+    void ListScores(List<ScoreEntry> scores)
+    {
+        scores = gateway.PadScoreList(scores);
+        for (int i = 0, l = scores.Count; i < l; i++)
         {
             UIScoreBoard board = Instantiate(scoreBoardPrefab, transform);
             board.SetScore(scores[i].rank, scores[i].name, scores[i].score);
         }
+
     }
 }

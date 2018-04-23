@@ -89,7 +89,7 @@ public class HighScoresGateway : MonoBehaviour {
 
     string GetChecksum(string name, string score)
     {
-        string msg = name + score + "mylittlesecret";
+        string msg = name + score + Stuff.Txt;
         System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create();
         byte[] hash = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(msg));
         string checkSum = System.BitConverter.ToString(hash).Replace("-", string.Empty);
